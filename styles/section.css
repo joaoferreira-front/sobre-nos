@@ -317,11 +317,47 @@ footer {
    RESPONSIVO
    ======================================== */
 
-@media (max-width: 600px) {
+/* ========================================
+   RESPONSIVO MELHORADO - SIMILAR AO DESKTOP
+   ======================================== */
+
+@media (max-width: 768px) {
+  /* 🔧 MELHORADO: Grid das fotos mais inteligente */
   .nossas-fotos {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr); /* 2 colunas em vez de 1 */
+    grid-template-rows: auto; /* Altura automática */
+    gap: 15px; /* Gap menor para mobile */
+    padding: 20px;
+    max-width: 100%;
+    justify-items: center;
   }
   
+  /* 🔧 MELHORADO: Fotos proporcionais no mobile */
+  .nossas-fotos img {
+    width: 100%; /* Ocupa toda a largura disponível */
+    max-width: 280px; /* Limite máximo */
+    height: 280px; /* Altura proporcional */
+    object-fit: cover;
+    padding: 10px 8px 30px; /* Padding ajustado */
+  }
+  
+  /* 🔧 MELHORADO: Figure responsivo */
+  .nossas-fotos figure {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  /* 🔧 MELHORADO: Figcaption ajustado */
+  figcaption {
+    top: 92%; /* Posição ajustada para mobile */
+    left: 50%;
+  }
+  
+  figcaption h3 {
+    font-size: 12px; /* Fonte menor no mobile */
+  }
+  
+  /* 🔧 MELHORADO: Hover mais sutil no mobile */
   .nossas-fotos figure:hover {
     transform: translateY(-2px) scale(1.01);
   }
@@ -329,25 +365,217 @@ footer {
   .nossas-fotos figure:hover img {
     transform: scale(1.02);
   }
-  
-  .cronometro-grid {
-    grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 480px) {
+  /* 📱 MOBILE PEQUENO: Ainda 2 colunas mas menores */
+  .nossas-fotos {
+    gap: 10px;
+    padding: 15px;
   }
   
-  .cronometro-numero {
-    font-size: 24px;
+  .nossas-fotos img {
+    max-width: 150px;
+    height: 150px;
+    padding: 8px 6px 25px;
   }
   
+  figcaption h3 {
+    font-size: 10px;
+  }
+}
+
+/* ========================================
+   CRONÔMETRO MOBILE MELHORADO
+   ======================================== */
+
+@media (max-width: 768px) {
   .cronometro-container {
-    padding: 20px;
+    padding: 25px 15px;
+    margin: 20px 10px 0;
   }
   
-  /* 🌊 CASCATA: Animações mais rápidas no mobile */
-  .nossas-fotos figure {
-    animation-duration: 0.6s;
+  /* 🔧 MELHORADO: Grid do cronômetro mais inteligente */
+  .cronometro-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas em vez de 2 */
+    gap: 10px;
+    max-width: 100%;
   }
   
   .cronometro-item {
+    padding: 15px 10px; /* Padding ajustado */
+    min-height: 80px; /* Altura mínima */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .cronometro-numero {
+    font-size: 24px; /* Tamanho legível */
+    margin-bottom: 3px;
+  }
+  
+  .cronometro-label {
+    font-size: 10px;
+    line-height: 1.2;
+  }
+  
+  .cronometro-titulo {
+    font-size: 24px; /* Título menor mas legível */
+    margin-bottom: 8px;
+  }
+  
+  .cronometro-subtitulo {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+  
+  .cronometro-info {
+    font-size: 12px;
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* 📱 MOBILE PEQUENO: 2 linhas de 3 colunas */
+  .cronometro-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  
+  .cronometro-item {
+    padding: 12px 8px;
+    min-height: 70px;
+  }
+  
+  .cronometro-numero {
+    font-size: 20px;
+  }
+  
+  .cronometro-label {
+    font-size: 9px;
+  }
+  
+  .cronometro-titulo {
+    font-size: 20px;
+  }
+  
+  .cronometro-subtitulo {
+    font-size: 12px;
+  }
+}
+
+/* ========================================
+   MELHORIAS GERAIS MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+  /* 🔧 MELHORADO: Header responsivo */
+  header {
+    padding-block: 30px;
+  }
+  
+  header h1 {
+    font-size: 28px;
+  }
+  
+  /* 🔧 MELHORADO: Seção título das fotos */
+  #nossas-fotos h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  /* 🔧 MELHORADO: Nossa história responsiva */
+  #nossa-historia {
+    margin: 20px 15px 30px;
+    padding: 20px 15px;
+  }
+  
+  .nossa-historia > h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .nossa-historia > p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  /* 🔧 MELHORADO: Footer responsivo */
+  footer {
+    padding: 15px 0;
+  }
+  
+  /* 🔧 MELHORADO: Animações mais rápidas no mobile */
+  .nossas-fotos figure {
     animation-duration: 0.5s;
+  }
+  
+  .cronometro-item {
+    animation-duration: 0.4s;
+  }
+}
+
+/* ========================================
+   LANDSCAPE MOBILE (CELULAR DEITADO)
+   ======================================== */
+
+@media (max-width: 768px) and (orientation: landscape) {
+  .nossas-fotos {
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas no landscape */
+    gap: 12px;
+  }
+  
+  .nossas-fotos img {
+    max-width: 200px;
+    height: 200px;
+  }
+  
+  .cronometro-grid {
+    grid-template-columns: repeat(6, 1fr); /* Todos em linha no landscape */
+    gap: 8px;
+  }
+  
+  .cronometro-item {
+    padding: 10px 5px;
+    min-height: 60px;
+  }
+  
+  .cronometro-numero {
+    font-size: 18px;
+  }
+  
+  .cronometro-label {
+    font-size: 8px;
+  }
+}
+
+/* ========================================
+   TABLET (768px - 1024px)
+   ======================================== */
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .nossas-fotos {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  
+  .nossas-fotos img {
+    width: 100%;
+    max-width: 250px;
+    height: 250px;
+  }
+  
+  .cronometro-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+  
+  .cronometro-numero {
+    font-size: 28px;
+  }
+  
+  .cronometro-label {
+    font-size: 11px;
   }
 }
