@@ -1,5 +1,5 @@
-// Data de início: 28 de outubro de 2023, 18:40 (conforme seu HTML)
-const dataInicio = new Date(2023, 9, 28, 18, 40, 0); // Mês é 0-indexado
+// Data de início: 28 de outubro de 2023, 18:40
+const dataInicio = new Date(2023, 9, 28, 18, 40, 0);
 
 function calcularTempo() {
     const agora = new Date();
@@ -37,10 +37,8 @@ function atualizarCronometro() {
     const cronometroElement = document.getElementById('cronometro');
     const infoElement = document.getElementById('info');
 
-    // Verifica se os elementos existem
     if (!cronometroElement) return;
 
-    // Cria os elementos apenas na primeira vez
     if (cronometroElement.children.length === 0) {
         tempo.forEach((unidade, index) => {
             const item = document.createElement('div');
@@ -54,7 +52,6 @@ function atualizarCronometro() {
             cronometroElement.appendChild(item);
         });
     } else {
-        // Atualiza apenas os números nas próximas execuções
         const itens = cronometroElement.querySelectorAll('.cronometro-item');
         tempo.forEach((unidade, index) => {
             if (itens[index]) {
@@ -71,7 +68,6 @@ function atualizarCronometro() {
         });
     }
 
-    // Atualiza as informações
     if (infoElement) {
         const agora = new Date();
         infoElement.innerHTML = `
@@ -81,18 +77,102 @@ function atualizarCronometro() {
     }
 }
 
+// Função para configurar o carrossel no mobile
+function configurarCarrosselMobile() {
+    // Verifica se está em viewport mobile
+    if (window.innerWidth <= 768) {
+        const fotosContainer = document.querySelector('.nossas-fotos');
+        if (!fotosContainer) return;
+        
+        // Adiciona indicadores de navegação
+        if (!document.querySelector('.carrossel-indicadores')) {
+            const indicadoresContainer = document.createElement('div');
+            indicadoresContainer.className = 'carrossel-indicadores';
+            
+            const fotos = fotosContainer.querySelectorAll('figure');
+            fotos.forEach((_, index) => {
+                const indicador = document.createElement('div');
+                indicador.className = 'indicador';
+                if (index === 0) indicador.classList.add('ativo');
+                
+                indicador.addEventListener('click', () => {
+                    const targetFoto = fotos[index];
+                    targetFoto.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'nearest',
+                        inline: 'center'
+                    });
+                });
+                
+                indicadoresContainer.appendChild(indicador);
+            });
+            
+            // Insere após o container de fotos
+            fotosContainer.parentNode.insertBefore(indicadoresContainer, fotosContainer.nextSibling);
+            
+            // Adiciona setas de navegação
+            const navContainer = document.createElement('div');
+            navContainer.className = 'carrossel-nav';
+            
+            const prevBtn = document.createElement('button');
+            prevBtn.innerHTML = '&lt;';
+            prevBtn.addEventListener('click', () => {
+                fotosContainer.scrollBy({
+                    left: -fotosContainer.offsetWidth * 0.85,
+                    behavior: 'smooth'
+                });
+            });
+            
+            const nextBtn = document.createElement('button');
+            nextBtn.innerHTML = '&gt;';
+            nextBtn.addEventListener('click', () => {
+                fotosContainer.scrollBy({
+                    left: fotosContainer.offsetWidth * 0.85,
+                    behavior: 'smooth'
+                });
+            });
+            
+            navContainer.appendChild(prevBtn);
+            navContainer.appendChild(nextBtn);
+            
+            // Insere após os indicadores
+            indicadoresContainer.parentNode.insertBefore(navContainer, indicadoresContainer.nextSibling);
+            
+            // Atualiza indicadores ao rolar
+            fotosContainer.addEventListener('scroll', () => {
+                const scrollPosition = fotosContainer.scrollLeft;
+                const fotoWidth = fotosContainer.offsetWidth * 0.85;
+                const currentIndex = Math.round(scrollPosition / fotoWidth);
+                
+                const indicadores = document.querySelectorAll('.indicador');
+                indicadores.forEach((ind, i) => {
+                    if (i === currentIndex) {
+                        ind.classList.add('ativo');
+                    } else {
+                        ind.classList.remove('ativo');
+                    }
+                });
+            });
+        }
+    }
+}
+
 // Inicializa quando a página carrega
 document.addEventListener('DOMContentLoaded', function() {
-    // Pequeno delay para permitir que as animações CSS comecem primeiro
+    // Configura o carrossel para mobile
+    configurarCarrosselMobile();
+    
+    // Atualiza o cronômetro
     setTimeout(() => {
         atualizarCronometro();
-        
-        // Atualiza a cada segundo
         setInterval(atualizarCronometro, 1000);
     }, 100);
+    
+    // Reconfigura o carrossel se a janela for redimensionada
+    window.addEventListener('resize', configurarCarrosselMobile);
 });
 
-// Opcional: Atualiza quando a aba ganha foco
+// Atualiza quando a aba ganha foco
 document.addEventListener('visibilitychange', function() {
     if (!document.hidden) {
         atualizarCronometro();
