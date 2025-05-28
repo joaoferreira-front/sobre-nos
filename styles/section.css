@@ -314,14 +314,20 @@ footer {
 }
 
 /* ========================================
-   CARROSSEL MOBILE - PASSAR PARA O LADO
+   CARROSSEL MOBILE - CORRIGIDO
    ======================================== */
 
 @media (max-width: 768px) {
+  /* 🔧 CORRIGIDO: Seção das fotos com espaçamento adequado */
+  #nossas-fotos {
+    margin-bottom: 60px; /* Espaço suficiente para indicadores e navegação */
+    padding-bottom: 40px;
+  }
+  
   /* 🔧 CORRIGIDO: Título centralizado */
   #nossas-fotos h2 {
     font-size: 22px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
     text-align: center;
     width: 100%;
     position: relative;
@@ -339,9 +345,11 @@ footer {
     -webkit-overflow-scrolling: touch;
     padding: 20px 10px 30px;
     gap: 15px;
-    grid-template-columns: none;
-    grid-template-rows: none;
+    grid-template-columns: none !important; /* Força override do grid */
+    grid-template-rows: none !important;
     justify-content: flex-start;
+    margin-bottom: 20px; /* Espaço para indicadores */
+    
     /* Esconde a barra de rolagem mas mantém funcionalidade */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
@@ -408,6 +416,7 @@ footer {
     width: auto;
     text-align: center;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    top: auto !important; /* Remove conflito com CSS original */
   }
   
   figcaption h3 {
@@ -420,8 +429,9 @@ footer {
   .carrossel-indicadores {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin: 15px 0 20px 0; /* Margem específica */
     gap: 8px;
+    padding: 0 20px;
   }
   
   .indicador {
@@ -439,18 +449,22 @@ footer {
     border-radius: 10px;
   }
   
-  /* 🔄 CARROSSEL: Setas de navegação */
+  /* 🔄 CARROSSEL: Setas de navegação - POSICIONAMENTO CORRIGIDO */
   .carrossel-nav {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
     display: flex;
     justify-content: space-between;
-    margin-top: -180px;
     pointer-events: none;
     padding: 0 15px;
+    z-index: 10;
   }
   
   .carrossel-nav button {
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.8);
     border: none;
     border-radius: 50%;
     width: 40px;
@@ -459,12 +473,17 @@ footer {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     pointer-events: auto;
-    z-index: 10;
     color: var(--cor-titulo);
     font-size: 18px;
     font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .carrossel-nav button:hover {
+    background-color: rgba(255, 255, 255, 0.95);
+    transform: scale(1.1);
   }
   
   .carrossel-nav button:focus {
@@ -473,15 +492,80 @@ footer {
 }
 
 /* ========================================
-   CRONÔMETRO MOBILE MELHORADO
+   NOSSA HISTÓRIA - CORRIGIDA PARA MOBILE
    ======================================== */
 
 @media (max-width: 768px) {
+  /* 🔧 CORRIGIDO: Nossa história com espaçamento adequado */
+  #nossa-historia {
+    margin: 40px 15px 30px 15px; /* Margem top maior para não invadir */
+    padding: 25px 20px;
+    background-color: var(--cor-caixa-texto);
+    border-radius: 15px;
+    box-shadow: var(--sombra-suave);
+    position: relative; /* Garante posicionamento correto */
+    z-index: 1; /* Fica abaixo do carrossel */
+    clear: both; /* Limpa qualquer float */
+    
+    /* 🌊 CASCATA: Animação ajustada */
+    opacity: 0;
+    transform: translateY(30px);
+    animation: apareceHistoria 0.8s ease forwards 1.8s; /* Delay maior */
+  }
+  
+  @keyframes apareceHistoria {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .nossa-historia > h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+    color: var(--cor-titulo);
+  }
+  
+  .nossa-historia > p {
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+    color: var(--cor-texto);
+  }
+}
+
+/* ========================================
+   CRONÔMETRO MOBILE - CORRIGIDO
+   ======================================== */
+
+@media (max-width: 768px) {
+  /* 🔧 CORRIGIDO: Footer com espaçamento adequado */
+  footer {
+    margin-top: 30px;
+    padding: 20px 10px 30px;
+    background-color: var(--cor-fundo);
+  }
+  
   /* 🔧 CORRIGIDO: Container do cronômetro */
   .cronometro-container {
     padding: 25px 15px;
-    margin: 20px 15px;
+    margin: 0 15px;
     border-radius: 15px;
+    background-color: var(--cor-caixa-texto);
+    box-shadow: var(--sombra-suave);
+    
+    /* 🌊 CASCATA: Aparece depois da história */
+    opacity: 0;
+    transform: translateY(30px);
+    animation: apareceContainer 0.8s ease forwards 2.2s;
+  }
+  
+  @keyframes apareceContainer {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   
   /* 🔧 CORRIGIDO: Título do cronômetro */
@@ -491,40 +575,59 @@ footer {
     text-align: center;
   }
   
+  .cronometro-subtitulo {
+    font-size: 14px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
   /* 🔧 CORRIGIDO: Grid do cronômetro */
   .cronometro-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
+    margin-bottom: 15px;
   }
   
   .cronometro-item {
-    padding: 15px 5px;
+    padding: 15px 8px;
+    border-radius: 10px;
+    text-align: center;
   }
   
   .cronometro-numero {
-    font-size: 22px;
+    font-size: 20px;
+    margin-bottom: 3px;
   }
   
   .cronometro-label {
-    font-size: 10px;
+    font-size: 9px;
+    line-height: 1.2;
+  }
+  
+  .cronometro-info {
+    font-size: 12px;
+    text-align: center;
+    opacity: 0.7;
   }
 }
 
 /* ========================================
-   MELHORIAS GERAIS MOBILE
+   MELHORIAS GERAIS MOBILE - CORRIGIDAS
    ======================================== */
 
 @media (max-width: 768px) {
   /* 🔧 CORRIGIDO: Container principal */
   .container {
     padding: 0 10px;
+    overflow-x: hidden; /* Evita scroll horizontal */
   }
   
   /* 🔧 CORRIGIDO: Header */
   header {
     padding: 20px 0;
     text-align: center;
+    margin-bottom: 20px;
   }
   
   header h1 {
@@ -534,54 +637,54 @@ footer {
     width: 100%;
   }
   
-  /* 🔧 CORRIGIDO: Nossa história */
-  #nossa-historia {
-    margin: 30px 15px;
-    padding: 20px 15px;
+  /* 🔧 CORRIGIDO: Seções com espaçamento adequado */
+  section {
+    margin-bottom: 30px;
   }
   
-  .nossa-historia > h2 {
-    font-size: 22px;
-    margin-bottom: 15px;
-    text-align: center;
-  }
-  
-  .nossa-historia > p {
-    font-size: 14px;
-    line-height: 1.6;
-    text-align: center;
-  }
-  
-  /* 🔧 CORRIGIDO: Footer */
-  footer {
-    padding: 15px 10px 30px;
+  /* 🔧 CORRIGIDO: Posicionamento relativo para carrossel */
+  #nossas-fotos {
+    position: relative;
   }
 }
 
 /* ========================================
-   LANDSCAPE MOBILE (CELULAR DEITADO)
+   MOBILE PEQUENO (< 480px)
    ======================================== */
 
-@media (max-width: 768px) and (orientation: landscape) {
+@media (max-width: 480px) {
   .nossas-fotos figure {
-    width: 70%;
-    max-width: 400px;
+    width: 90%;
+    max-width: 280px;
   }
   
   .nossas-fotos img {
-    height: 250px;
+    height: 300px;
+  }
+  
+  #nossa-historia {
+    margin: 50px 10px 25px 10px;
+    padding: 20px 15px;
+  }
+  
+  .cronometro-container {
+    margin: 0 10px;
+    padding: 20px 12px;
   }
   
   .cronometro-grid {
-    grid-template-columns: repeat(6, 1fr);
     gap: 8px;
   }
   
   .cronometro-item {
-    padding: 10px 5px;
+    padding: 12px 6px;
   }
   
   .cronometro-numero {
     font-size: 18px;
+  }
+  
+  .cronometro-label {
+    font-size: 8px;
   }
 }
