@@ -1,161 +1,103 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nosso Amor</title>
-    <link rel="stylesheet" href="styles/index.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- 🔧 ADICIONADO: Meta tags para melhor performance mobile -->
-    <meta name="theme-color" content="#b03060">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <title>Nossa História</title>
+    <link rel="stylesheet" href="globals.css">
+    <link rel="stylesheet" href="estilo-original.css">
 </head>
 <body>
-    <header>
-        <h1>Nosso Amor</h1>
-    </header>
-    
-    <main class="container">
-        <!-- Seção das Fotos com Carrossel -->
+    <div class="container">
+        <!-- Cabeçalho -->
+        <header>
+            <h1>Nossa História de Amor</h1>
+        </header>
+
+        <!-- Seção das Fotos -->
         <section id="nossas-fotos">
             <h2>Nossas Fotos</h2>
-            
-            <!-- 🔄 CARROSSEL: Container das fotos -->
             <div class="nossas-fotos">
                 <figure>
-                    <img src="assets/Captura de tela 2025-05-22 213501.png" alt="Foto do casal sorrindo">
+                    <img src="foto1.jpg" alt="Nossa primeira foto">
                     <figcaption>
-                        <h3>02/04/2025</h3>
+                        <h3>28/10/2023</h3>
                     </figcaption>
                 </figure>
                 
                 <figure>
-                    <img src="assets/05F8D382-2586-41F3-A30F-C8CE2B4418D9.jpg" alt="Casal abraçado ao pôr do sol">
+                    <img src="foto2.jpg" alt="Segundo momento especial">
                     <figcaption>
-                        <h3>02/04/2025</h3>
+                        <h3>15/11/2023</h3>
                     </figcaption>
                 </figure>
                 
                 <figure>
-                    <img src="assets/67F4B016-190B-4FD9-B113-51850BFE1D44.jpg" alt="Momento especial do casal"> 
+                    <img src="foto3.jpg" alt="Terceiro momento especial">
                     <figcaption>
-                        <h3>02/04/2025</h3>
+                        <h3>02/12/2023</h3>
                     </figcaption>
                 </figure>
                 
                 <figure>
-                    <img src="assets/img.jpg" alt="Momento especial do casal">
+                    <img src="foto4.jpg" alt="Quarto momento especial">
                     <figcaption>
-                        <h3>02/04/2025</h3>
+                        <h3>20/12/2023</h3>
                     </figcaption>
                 </figure>
                 
                 <figure>
-                    <img src="assets/IMG3.jpg" alt="Momento especial do casal">
+                    <img src="foto5.jpg" alt="Quinto momento especial">
                     <figcaption>
-                        <h3>02/04/2025</h3>
+                        <h3>14/02/2024</h3>
                     </figcaption>
                 </figure>
                 
                 <figure>
-                    <img src="assets/IMG_5771.jpg" alt="Momento especial do casal">
+                    <img src="foto6.jpg" alt="Sexto momento especial">
                     <figcaption>
-                        <h3>02/04/2025</h3>
+                        <h3>25/05/2024</h3>
                     </figcaption>
                 </figure>
             </div>
-            
-            <!-- 🔄 CARROSSEL: Os indicadores e navegação serão inseridos aqui pelo JavaScript -->
         </section>
-        
+
         <!-- Seção Nossa História -->
         <section id="nossa-historia">
-            <article class="nossa-historia">
+            <div class="nossa-historia">
                 <h2>Nossa História</h2>
                 <p>
-                    Nossa história começou em um momento especial, e desde então cada dia tem sido uma nova aventura. 
-                    Juntos construímos memórias preciosas, compartilhamos sonhos e crescemos como pessoas. 
-                    O amor que sentimos um pelo outro só cresce a cada dia que passa, e estamos ansiosos para 
-                    continuar escrevendo nossa história juntos, criando novos momentos especiais e vivendo cada segundo ao máximo.
+                    Aqui você pode escrever a história de vocês dois. Como se conheceram, 
+                    os primeiros momentos juntos, as aventuras que viveram e todos os 
+                    momentos especiais que marcaram essa linda jornada de amor.
                 </p>
-            </article>
+                <p>
+                    Cada dia ao lado de você é uma nova página escrita em nossa história. 
+                    Desde aquele primeiro encontro até hoje, cada momento se tornou uma 
+                    lembrança preciosa que guardamos no coração.
+                </p>
+            </div>
         </section>
-    </main>
-    
-    <!-- Footer com Cronômetro -->
-    <footer>
-        <div class="cronometro-container">
-            <h1 class="cronometro-titulo">💕 Tempo Juntos 💕</h1>
-            <p class="cronometro-subtitulo">Desde 28 de outubro de 2023, 18:40</p>
-            
-            <!-- 🔄 CRONÔMETRO: Grid que será preenchido pelo JavaScript -->
-            <div class="cronometro-grid" id="cronometro">
-                <!-- Os itens serão inseridos aqui pelo JavaScript -->
-            </div>
-            
-            <div class="cronometro-info" id="info">
-                Carregando...
-            </div>
-        </div>
-    </footer>
 
-    <!-- 🔧 ADICIONADO: Loading screen opcional -->
-    <div id="loading-screen" style="
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: var(--cor-fundo);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        opacity: 1;
-        transition: opacity 0.5s ease;
-    ">
-        <div style="text-align: center;">
-            <div style="
-                width: 40px;
-                height: 40px;
-                border: 3px solid var(--cor-destaque);
-                border-top: 3px solid transparent;
-                border-radius: 50%;
-                animation: spin 1s linear infinite;
-                margin: 0 auto 20px;
-            "></div>
-            <p style="color: var(--cor-titulo); font-family: var(--fonte-principal);">Carregando nosso amor...</p>
-        </div>
+        <!-- Cronômetro -->
+        <footer>
+            <div class="cronometro-container">
+                <h1 class="cronometro-titulo">Tempo Juntos</h1>
+                <p class="cronometro-subtitulo">Contando cada segundo do nosso amor</p>
+                
+                <div class="cronometro-grid" id="cronometro">
+                    <!-- Os itens do cronômetro são criados pelo JavaScript -->
+                </div>
+                
+                <p class="cronometro-info" id="info">
+                    <!-- A informação da data é inserida pelo JavaScript -->
+                </p>
+            </div>
+        </footer>
     </div>
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
-    
-    <!-- 🔧 ADICIONADO: Script para remover loading screen -->
-    <script>
-        // Remove a tela de loading quando tudo carregar
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                const loadingScreen = document.getElementById('loading-screen');
-                if (loadingScreen) {
-                    loadingScreen.style.opacity = '0';
-                    setTimeout(() => {
-                        loadingScreen.remove();
-                    }, 500);
-                }
-            }, 1000); // Aguarda 1 segundo para mostrar o loading
-        });
-        
-        // Animação de spin para o loading
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
+    <!-- Scripts -->
+    <script src="cronometro-original.js"></script>
+    <!-- <script src="carrossel-basico.js"></script> --> <!-- Descomente se quiser o carrossel mobile -->
 </body>
 </html>

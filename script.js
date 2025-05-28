@@ -1,180 +1,172 @@
-// Data de início: 28 de outubro de 2023, 18:40
-const dataInicio = new Date(2023, 9, 28, 18, 40, 0);
+// Data inicial - 28 de outubro de 2023 às 18:00
+const dataInicial = new Date("2023-10-28T18:00:00")
 
+// Elementos do cronômetro
+const cronometroGrid = document.getElementById("cronometro")
+const infoElement = document.getElementById("info")
+
+// Função para calcular a diferença de tempo
 function calcularTempo() {
-    const agora = new Date();
-    const diferenca = agora.getTime() - dataInicio.getTime();
+  const agora = new Date()
+  const diferenca = Math.abs(agora - dataInicial)
 
-    const anos = Math.floor(diferenca / (1000 * 60 * 60 * 24 * 365));
-    const meses = Math.floor((diferenca % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-    const dias = Math.floor((diferenca % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-    const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
-    const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+  // Cálculos de tempo
+  const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24))
+  const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60))
+  const segundos = Math.floor((diferenca % (1000 * 60)) / 1000)
 
-    return [
-        { valor: anos, label: anos === 1 ? 'Ano' : 'Anos' },
-        { valor: meses, label: meses === 1 ? 'Mês' : 'Meses' },
-        { valor: dias, label: dias === 1 ? 'Dia' : 'Dias' },
-        { valor: horas, label: horas === 1 ? 'Hora' : 'Horas' },
-        { valor: minutos, label: minutos === 1 ? 'Minuto' : 'Minutos' },
-        { valor: segundos, label: segundos === 1 ? 'Segundo' : 'Segundos' }
-    ];
+  // Cálculos adicionais
+  const semanas = Math.floor(dias / 7)
+  const meses = Math.floor(dias / 30.44) // Média de dias por mês
+
+  return { dias, horas, minutos, segundos, semanas, meses }
 }
 
-function formatarData(data) {
-    return data.toLocaleDateString('pt-BR', {
-        day: '2-digit',
-        month: 'long',
-        year: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
-}
-
+// Função para atualizar o cronômetro
 function atualizarCronometro() {
-    const tempo = calcularTempo();
-    const cronometroElement = document.getElementById('cronometro');
-    const infoElement = document.getElementById('info');
+  const tempo = calcularTempo()
 
-    if (!cronometroElement) return;
+  // Limpar o grid
+  cronometroGrid.innerHTML = ""
 
-    if (cronometroElement.children.length === 0) {
-        tempo.forEach((unidade, index) => {
-            const item = document.createElement('div');
-            item.className = 'cronometro-item';
-            
-            item.innerHTML = `
-                <div class="cronometro-numero">${unidade.valor.toString().padStart(2, '0')}</div>
-                <div class="cronometro-label">${unidade.label}</div>
-            `;
-            
-            cronometroElement.appendChild(item);
-        });
-    } else {
-        const itens = cronometroElement.querySelectorAll('.cronometro-item');
-        tempo.forEach((unidade, index) => {
-            if (itens[index]) {
-                const numeroElement = itens[index].querySelector('.cronometro-numero');
-                const labelElement = itens[index].querySelector('.cronometro-label');
-                
-                if (numeroElement) {
-                    numeroElement.textContent = unidade.valor.toString().padStart(2, '0');
-                }
-                if (labelElement) {
-                    labelElement.textContent = unidade.label;
-                }
-            }
-        });
-    }
+  // Adicionar itens ao grid
+  adicionarItemCronometro(tempo.meses, "Meses")
+  adicionarItemCronometro(tempo.semanas, "Semanas")
+  adicionarItemCronometro(tempo.dias, "Dias")
+  adicionarItemCronometro(tempo.horas, "Horas")
+  adicionarItemCronometro(tempo.minutos, "Minutos")
+  adicionarItemCronometro(tempo.segundos, "Segundos")
 
-    if (infoElement) {
-        const agora = new Date();
-        infoElement.innerHTML = `
-            Atualizado em tempo real • ${agora.toLocaleTimeString('pt-BR')}<br>
-            <small>Início: ${formatarData(dataInicio)}</small>
-        `;
-    }
+  // Atualizar informação adicional
+  const dataFormatada = dataInicial.toLocaleDateString("pt-BR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  })
+  infoElement.textContent = `Contando desde ${dataFormatada}`
 }
 
-// Função para configurar o carrossel no mobile
+// Função para adicionar um item ao cronômetro
+function adicionarItemCronometro(valor, label) {
+  const item = document.createElement("div")
+  item.className = "cronometro-item"
+
+  const numero = document.createElement("div")
+  numero.className = "cronometro-numero"
+  numero.textContent = valor
+
+  const texto = document.createElement("div")
+  texto.className = "cronometro-label"
+  texto.textContent = label
+
+  item.appendChild(numero)
+  item.appendChild(texto)
+  cronometroGrid.appendChild(item)
+
+  // Adicionar classe para ativar animação após um pequeno delay
+  setTimeout(() => {
+    item.classList.add("js-created")
+  }, 100)
+}
+
+// Iniciar o cronômetro
+atualizarCronometro()
+
+// Atualizar a cada segundo
+setInterval(atualizarCronometro, 1000)
+// Função para configurar o carrossel em dispositivos móveis
 function configurarCarrosselMobile() {
-    // Verifica se está em viewport mobile
-    if (window.innerWidth <= 768) {
-        const fotosContainer = document.querySelector('.nossas-fotos');
-        if (!fotosContainer) return;
-        
-        // Adiciona indicadores de navegação
-        if (!document.querySelector('.carrossel-indicadores')) {
-            const indicadoresContainer = document.createElement('div');
-            indicadoresContainer.className = 'carrossel-indicadores';
-            
-            const fotos = fotosContainer.querySelectorAll('figure');
-            fotos.forEach((_, index) => {
-                const indicador = document.createElement('div');
-                indicador.className = 'indicador';
-                if (index === 0) indicador.classList.add('ativo');
-                
-                indicador.addEventListener('click', () => {
-                    const targetFoto = fotos[index];
-                    targetFoto.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'nearest',
-                        inline: 'center'
-                    });
-                });
-                
-                indicadoresContainer.appendChild(indicador);
-            });
-            
-            // Insere após o container de fotos
-            fotosContainer.parentNode.insertBefore(indicadoresContainer, fotosContainer.nextSibling);
-            
-            // Adiciona setas de navegação
-            const navContainer = document.createElement('div');
-            navContainer.className = 'carrossel-nav';
-            
-            const prevBtn = document.createElement('button');
-            prevBtn.innerHTML = '&lt;';
-            prevBtn.addEventListener('click', () => {
-                fotosContainer.scrollBy({
-                    left: -fotosContainer.offsetWidth * 0.85,
-                    behavior: 'smooth'
-                });
-            });
-            
-            const nextBtn = document.createElement('button');
-            nextBtn.innerHTML = '&gt;';
-            nextBtn.addEventListener('click', () => {
-                fotosContainer.scrollBy({
-                    left: fotosContainer.offsetWidth * 0.85,
-                    behavior: 'smooth'
-                });
-            });
-            
-            navContainer.appendChild(prevBtn);
-            navContainer.appendChild(nextBtn);
-            
-            // Insere após os indicadores
-            indicadoresContainer.parentNode.insertBefore(navContainer, indicadoresContainer.nextSibling);
-            
-            // Atualiza indicadores ao rolar
-            fotosContainer.addEventListener('scroll', () => {
-                const scrollPosition = fotosContainer.scrollLeft;
-                const fotoWidth = fotosContainer.offsetWidth * 0.85;
-                const currentIndex = Math.round(scrollPosition / fotoWidth);
-                
-                const indicadores = document.querySelectorAll('.indicador');
-                indicadores.forEach((ind, i) => {
-                    if (i === currentIndex) {
-                        ind.classList.add('ativo');
-                    } else {
-                        ind.classList.remove('ativo');
-                    }
-                });
-            });
+  // Verificar se é um dispositivo móvel (largura menor que 768px)
+  if (window.innerWidth <= 768) {
+    const container = document.querySelector(".nossas-fotos")
+    const figuras = container.querySelectorAll("figure")
+
+    // Criar indicadores
+    const indicadoresContainer = document.createElement("div")
+    indicadoresContainer.className = "carrossel-indicadores"
+
+    // Criar navegação
+    const navContainer = document.createElement("div")
+    navContainer.className = "carrossel-nav"
+
+    const btnAnterior = document.createElement("button")
+    btnAnterior.innerHTML = "‹"
+    btnAnterior.setAttribute("aria-label", "Foto anterior")
+
+    const btnProximo = document.createElement("button")
+    btnProximo.innerHTML = "›"
+    btnProximo.setAttribute("aria-label", "Próxima foto")
+
+    navContainer.appendChild(btnAnterior)
+    navContainer.appendChild(btnProximo)
+
+    // Adicionar indicadores para cada figura
+    figuras.forEach((_, index) => {
+      const indicador = document.createElement("div")
+      indicador.className = "indicador"
+      if (index === 0) indicador.classList.add("ativo")
+      indicador.setAttribute("data-index", index)
+      indicadoresContainer.appendChild(indicador)
+
+      // Evento de clique no indicador
+      indicador.addEventListener("click", () => {
+        const figura = figuras[index]
+        figura.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" })
+      })
+    })
+
+    // Adicionar elementos ao DOM
+    const fotosSection = document.getElementById("nossas-fotos")
+    fotosSection.appendChild(indicadoresContainer)
+    fotosSection.appendChild(navContainer)
+
+    // Eventos de navegação
+    btnAnterior.addEventListener("click", () => {
+      container.scrollBy({ left: -container.offsetWidth * 0.85, behavior: "smooth" })
+    })
+
+    btnProximo.addEventListener("click", () => {
+      container.scrollBy({ left: container.offsetWidth * 0.85, behavior: "smooth" })
+    })
+
+    // Atualizar indicador ativo durante o scroll
+    container.addEventListener("scroll", () => {
+      const scrollPosition = container.scrollLeft
+      const containerWidth = container.offsetWidth
+
+      // Encontrar a figura mais visível
+      let activeIndex = 0
+      let maxVisibility = 0
+
+      figuras.forEach((figura, index) => {
+        const figuraLeft = figura.offsetLeft - container.offsetLeft
+        const figuraCenter = figuraLeft + figura.offsetWidth / 2
+        const containerCenter = scrollPosition + containerWidth / 2
+        const visibility = 1 - Math.min(Math.abs(figuraCenter - containerCenter) / (containerWidth / 2), 1)
+
+        if (visibility > maxVisibility) {
+          maxVisibility = visibility
+          activeIndex = index
         }
-    }
+      })
+
+      // Atualizar indicador ativo
+      document.querySelectorAll(".indicador").forEach((ind, index) => {
+        if (index === activeIndex) {
+          ind.classList.add("ativo")
+        } else {
+          ind.classList.remove("ativo")
+        }
+      })
+    })
+  }
 }
 
-// Inicializa quando a página carrega
-document.addEventListener('DOMContentLoaded', function() {
-    // Configura o carrossel para mobile
-    configurarCarrosselMobile();
-    
-    // Atualiza o cronômetro
-    setTimeout(() => {
-        atualizarCronometro();
-        setInterval(atualizarCronometro, 1000);
-    }, 100);
-    
-    // Reconfigura o carrossel se a janela for redimensionada
-    window.addEventListener('resize', configurarCarrosselMobile);
-});
+// Executar quando o DOM estiver carregado
+document.addEventListener("DOMContentLoaded", configurarCarrosselMobile)
 
-// Atualiza quando a aba ganha foco
-document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) {
-        atualizarCronometro();
-    }
-});
+// Reconfigurar quando a janela for redimensionada
+window.addEventListener("resize", configurarCarrosselMobile)
